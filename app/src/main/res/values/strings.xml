@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">HeroMe</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="custom_banner">custom_banner</string>
+    <string name="hero_icons">hero_icons</string>
+    <string name="came_by_accident">Came by accident</string>
 </resources>

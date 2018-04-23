@@ -1,7 +1,9 @@
-package com.sleepless_entertainment.drowsy.herome;
+package com.sleepless_entertainment.drowsy.herome.Activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.sleepless_entertainment.drowsy.herome.R;
 
 public class MainActivity extends Activity {
 
