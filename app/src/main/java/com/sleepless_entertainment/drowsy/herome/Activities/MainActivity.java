@@ -1,15 +1,31 @@
 package com.sleepless_entertainment.drowsy.herome.Activities;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.net.Uri;
 import android.os.Bundle;
 
+import com.sleepless_entertainment.drowsy.herome.Fragments.MainFragment;
 import com.sleepless_entertainment.drowsy.herome.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements MainFragment.MainFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FragmentManager manager = getFragmentManager();
+        Fragment fragment = manager.findFragmentById(R.id.fragment_container);
+
+        if (fragment == null) {
+            fragment = new MainFragment();
+            manager.beginTransaction().add(R.id.fragment_container, fragment).commit();
+        }
+    }
+
+    @Override
+    public void onMainFragmentInteraction(Uri uri) {
+
     }
 }

@@ -6,4 +6,7 @@
     <string name="custom_banner">custom_banner</string>
     <string name="hero_icons">hero_icons</string>
     <string name="came_by_accident">Came by accident</string>
+    <string name="born_with_them">Born with them</string>
+    <string name="choose_powers">CHOOSE POWERS</string>
+    <string name="genetic_mutation">Genetic Mutation</string>
 </resources>
