@@ -1,6 +1,7 @@
 package com.sleepless_entertainment.drowsy.herome.Fragments;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -19,9 +20,13 @@ import com.sleepless_entertainment.drowsy.herome.R;
  * Use the {@link MainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements View.OnClickListener {
 
 //    TODO: Try creating the line layout programmatically
+//    TODO: Prevent Button text from moving when checkmark is disabled
+
+    public static int lastSelectedButtonId;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,13 +77,25 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+//        Fetch button references
         accidentBtn = view.findViewById(R.id.accidentOption);
         geneticBtn = view.findViewById(R.id.mutationOption);
         bornBtn = view.findViewById(R.id.bornOption);
         chooseBtn = view.findViewById(R.id.choosePowersBtn);
 
+//        Assign listeners
+        accidentBtn.setOnClickListener(this);
+        geneticBtn.setOnClickListener(this);
+        bornBtn.setOnClickListener(this);
+
+//        Disable the advance button
         chooseBtn.setEnabled(false);
         chooseBtn.getBackground().setAlpha(128);
+
+        accidentBtn.getCompoundDrawablesRelative()[2].setAlpha(0);
+        geneticBtn.getCompoundDrawablesRelative()[2].setAlpha(0);
+        bornBtn.getCompoundDrawablesRelative()[2].setAlpha(0);
+
 
         return view;
     }
@@ -105,6 +122,26 @@ public class MainFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View view) {
+        chooseBtn.setEnabled(true);
+        chooseBtn.getBackground().setAlpha(255);
+
+        Button button = (Button) view;
+
+        if (lastSelectedButtonId == accidentBtn.getId())
+            accidentBtn.getCompoundDrawablesRelative()[2].setAlpha(0);
+        else if (lastSelectedButtonId == geneticBtn.getId())
+            geneticBtn.getCompoundDrawablesRelative()[2].setAlpha(0);
+        else if (lastSelectedButtonId == bornBtn.getId())
+            bornBtn.getCompoundDrawablesRelative()[2].setAlpha(0);
+        else
+            System.out.println("No previous button found");
+
+        button.getCompoundDrawablesRelative()[2].setAlpha(255);
+        lastSelectedButtonId = button.getId();
     }
 
     /**
