@@ -48,6 +48,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/hero_button"
+            android:capitalize="none"
             android:drawableEnd="@drawable/item_selected"
             android:drawableStart="@drawable/lightning_icon"
             android:paddingEnd="8dp"
