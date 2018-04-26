@@ -25,18 +25,14 @@ import com.sleepless_entertainment.drowsy.herome.R;
  */
 public class MainFragment extends Fragment implements View.OnClickListener {
 
-    private Drawable accidentCheck;
-    private Drawable geneticCheck;
-    private Drawable bornCheck;
-    private View selectedOption;
-
+    private Drawable accidentCheck, geneticCheck, bornCheck;
+    private Button accidentBtn, geneticBtn, bornBtn, chooseBtn;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private Button accidentBtn, geneticBtn, bornBtn, chooseBtn;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -141,40 +137,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         mListener = null;
     }
 
-//    @Override
-//    public void onClick(View view) {
-//        chooseBtn.setEnabled(true);
-//        chooseBtn.getBackground().setAlpha(255);
-//
-//        Button button = (Button) view;
-//
-//        switch (view.getId()) {
-//            case R.id.accidentOption:
-//                accidentBtn.getCompoundDrawables()[2].setAlpha(255);
-//                geneticBtn.getCompoundDrawables()[2].setAlpha(0);
-//                bornBtn.getCompoundDrawables()[2].setAlpha(0);
-//                break;
-//            case R.id.mutationOption:
-//                accidentBtn.getCompoundDrawables()[2].setAlpha(0);
-//                geneticBtn.getCompoundDrawables()[2].setAlpha(255);
-//                bornBtn.getCompoundDrawables()[2].setAlpha(0);
-//                break;
-//            case R.id.bornOption:
-//                accidentBtn.getCompoundDrawables()[2].setAlpha(0);
-//                geneticBtn.getCompoundDrawables()[2].setAlpha(0);
-//                bornBtn.getCompoundDrawables()[2].setAlpha(255);
-//                break;
-//            default:
-//                System.out.println("No ID matched in switch statement");
-//                break;
-//        }
-//
-////        if (button.getCompoundDrawables()[2].getAlpha() == 0)
-////            button.getCompoundDrawables()[2].setAlpha(255);
-////        else
-////            button.getCompoundDrawables()[2].setAlpha(0);
-//    }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -194,8 +156,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
             chooseBtn.setEnabled(true);
             chooseBtn.getBackground().setAlpha(255);
-
-            selectedOption = view;
 
             switch (view.getId()) {
                 case R.id.accidentOption:

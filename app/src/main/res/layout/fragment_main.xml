@@ -5,29 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/hero_bg_gradient"
-    tools:context=".Fragments.MainFragment">
+    tools:context=".Fragments.MainFragment"
+    tools:layout_editor_absoluteY="25dp">
 
     <ImageView
         android:id="@+id/heroIconHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:contentDescription="@string/hero_icons"
         android:src="@drawable/heroes"
-        app:layout_constraintBottom_toTopOf="@+id/accidentOption"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/accidentOption"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/hero_button"
         android:capitalize="none"
         android:drawableEnd="@drawable/item_selected"
@@ -36,14 +34,15 @@
         android:paddingStart="10dp"
         android:text="@string/came_by_accident"
         android:textAlignment="center"
-        android:textColor="#FAC740"
+        android:textColor="@color/colorAccent"
         android:textSize="19sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/mutationOption"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/heroIconHeader"
+        app:layout_constraintVertical_chainStyle="packed"
         tools:textAllCaps="false" />
 
     <Button
@@ -51,6 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
         android:background="@drawable/hero_button"
@@ -60,7 +60,7 @@
         android:paddingStart="10dp"
         android:text="@string/genetic_mutation"
         android:textAlignment="center"
-        android:textColor="#FAC740"
+        android:textColor="@color/colorAccent"
         android:textSize="19sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/bornOption"
@@ -84,7 +84,7 @@
         android:paddingStart="10dp"
         android:text="@string/born_with_them"
         android:textAlignment="center"
-        android:textColor="#FAC740"
+        android:textColor="@color/colorAccent"
         android:textSize="19sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/choosePowersBtn"
@@ -98,12 +98,11 @@
         android:id="@+id/choosePowersBtn"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="45dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
         android:background="@drawable/hero_solid_button"
-        android:backgroundTint="#FAC740"
+        android:backgroundTint="@color/colorAccent"
         android:text="@string/choose_powers"
         android:textAlignment="center"
         android:textColor="#121921"
@@ -111,6 +110,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bornOption" />
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>
