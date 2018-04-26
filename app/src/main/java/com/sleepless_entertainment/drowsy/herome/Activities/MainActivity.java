@@ -3,8 +3,11 @@ package com.sleepless_entertainment.drowsy.herome.Activities;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
+import android.transition.Transition;
+import android.transition.TransitionValues;
 
 import com.sleepless_entertainment.drowsy.herome.Fragments.MainFragment;
 import com.sleepless_entertainment.drowsy.herome.Fragments.PickPowerFragment;
@@ -25,13 +28,24 @@ public class MainActivity extends Activity implements MainFragment.MainFragmentI
 
         if (fragment == null) {
             fragment = new MainFragment();
-            manager.beginTransaction().add(R.id.fragment_container, fragment).commit();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//            transaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
+            transaction.add(R.id.fragment_container, fragment);
+            transaction.commit();
         }
     }
 
     public void loadPickPowerFragment() {
         PickPowerFragment pickPowerFragment = PickPowerFragment.newInstance("","");
-        this.getFragmentManager().beginTransaction().replace(R.id.fragment_container, pickPowerFragment).addToBackStack(null).commit();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
+//        fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+        fragmentTransaction.replace(R.id.fragment_container, pickPowerFragment).addToBackStack(null);
+
+
+        fragmentTransaction.commit();
     }
 
     @Override

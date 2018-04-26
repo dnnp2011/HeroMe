@@ -1,12 +1,10 @@
 package com.sleepless_entertainment.drowsy.herome.Fragments;
 
-import android.app.FragmentManager;
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
