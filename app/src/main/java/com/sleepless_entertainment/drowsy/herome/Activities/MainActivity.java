@@ -1,19 +1,17 @@
 package com.sleepless_entertainment.drowsy.herome.Activities;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
-import android.transition.Transition;
-import android.transition.TransitionValues;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import com.sleepless_entertainment.drowsy.herome.Fragments.MainFragment;
 import com.sleepless_entertainment.drowsy.herome.Fragments.PickPowerFragment;
 import com.sleepless_entertainment.drowsy.herome.R;
 
-public class MainActivity extends Activity implements MainFragment.MainFragmentInteractionListener, PickPowerFragment.PickPowerInteractionListener {
+public class MainActivity extends FragmentActivity implements MainFragment.MainFragmentInteractionListener, PickPowerFragment.PickPowerInteractionListener {
 
 //    TODO: Try creating the line layout around MainFragment programmatically
 //    TODO: Implement data persistence for MainFragment buttons
@@ -23,29 +21,29 @@ public class MainActivity extends Activity implements MainFragment.MainFragmentI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FragmentManager manager = getFragmentManager();
-        Fragment fragment = manager.findFragmentById(R.id.fragment_container);
+        FragmentManager manager = getSupportFragmentManager();
+        Fragment fragment = manager.findFragmentById(R.id.mainFragmentObj);
 
         if (fragment == null) {
-            fragment = new MainFragment();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//            transaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
-            transaction.add(R.id.fragment_container, fragment);
+            transaction.setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_top);
+            transaction.add(R.id.fragment_container, new MainFragment());
             transaction.commit();
         }
     }
 
     public void loadPickPowerFragment() {
-        PickPowerFragment pickPowerFragment = PickPowerFragment.newInstance("","");
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-//        fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-        fragmentTransaction.replace(R.id.fragment_container, pickPowerFragment).addToBackStack(null);
+//        TODO: PickPowerFragment doesn't enter from the left as it should
 
-
-        fragmentTransaction.commit();
+//        HACK: New is Entering LEFT; REVERSE: New is Entering RIGHT
+//        TODO: Switch Enter right with enter left
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+        transaction.addToBackStack(null);
+        transaction.replace(R.id.fragment_container, PickPowerFragment.newInstance());
+        getFragmentManager().executePendingTransactions();
+        transaction.commit();
     }
 
     @Override
