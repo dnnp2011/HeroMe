@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,119 +7,110 @@
     android:background="@drawable/hero_bg_gradient"
     tools:context=".Fragments.MainFragment">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/heroIconHeader"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:contentDescription="@string/hero_icons"
+        android:src="@drawable/heroes"
+        app:layout_constraintBottom_toTopOf="@+id/accidentOption"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#253748"
-            android:minHeight="10dp"
-            android:theme="?attr/actionBarTheme">
+    <Button
+        android:id="@+id/accidentOption"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/hero_button"
+        android:capitalize="none"
+        android:drawableEnd="@drawable/item_selected"
+        android:drawableStart="@drawable/lightning_icon"
+        android:paddingEnd="8dp"
+        android:paddingStart="10dp"
+        android:text="@string/came_by_accident"
+        android:textAlignment="center"
+        android:textColor="#FAC740"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/mutationOption"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heroIconHeader"
+        tools:textAllCaps="false" />
 
-            <ImageView
-                android:id="@+id/actionBarBanner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/custom_banner"
-                android:src="@drawable/top_banner_bar" />
+    <Button
+        android:id="@+id/mutationOption"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/hero_button"
+        android:drawableEnd="@drawable/item_selected"
+        android:drawableStart="@drawable/atomic_icon"
+        android:paddingEnd="8dp"
+        android:paddingStart="10dp"
+        android:text="@string/genetic_mutation"
+        android:textAlignment="center"
+        android:textColor="#FAC740"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/bornOption"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accidentOption"
+        tools:textAllCaps="false" />
 
-        </android.support.v7.widget.Toolbar>
+    <Button
+        android:id="@+id/bornOption"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/hero_button"
+        android:drawableEnd="@drawable/item_selected"
+        android:drawableStart="@drawable/rocket_icon"
+        android:paddingEnd="8dp"
+        android:paddingStart="10dp"
+        android:text="@string/born_with_them"
+        android:textAlignment="center"
+        android:textColor="#FAC740"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/choosePowersBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mutationOption"
+        tools:textAllCaps="false" />
 
-        <ImageView
-            android:id="@+id/heroIconHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="30dp"
-            android:contentDescription="@string/hero_icons"
-            android:src="@drawable/heroes" />
-
-        <Button
-            android:id="@+id/accidentOption"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="15dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/hero_button"
-            android:capitalize="none"
-            android:drawableEnd="@drawable/item_selected"
-            android:drawableStart="@drawable/lightning_icon"
-            android:paddingEnd="8dp"
-            android:paddingStart="10dp"
-            android:text="@string/came_by_accident"
-            android:textAlignment="center"
-            android:textColor="#FAC740"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            tools:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/mutationOption"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="15dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/hero_button"
-            android:drawableEnd="@drawable/item_selected"
-            android:drawableStart="@drawable/atomic_icon"
-            android:paddingEnd="8dp"
-            android:paddingStart="10dp"
-            android:text="@string/genetic_mutation"
-            android:textAlignment="center"
-            android:textColor="#FAC740"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            tools:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/bornOption"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="15dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/hero_button"
-            android:drawableEnd="@drawable/item_selected"
-            android:drawableStart="@drawable/rocket_icon"
-            android:paddingEnd="8dp"
-            android:paddingStart="10dp"
-            android:text="@string/born_with_them"
-            android:textAlignment="center"
-            android:textColor="#FAC740"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            tools:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/choosePowersBtn"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/hero_solid_button"
-            android:backgroundTint="#FAC740"
-            android:paddingEnd="8dp"
-            android:paddingStart="10dp"
-            android:text="@string/choose_powers"
-            android:textAlignment="center"
-            android:textColor="#121921"
-            android:textSize="19sp" />
-
-
-    </LinearLayout>
-
-</FrameLayout>
+    <Button
+        android:id="@+id/choosePowersBtn"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/hero_solid_button"
+        android:backgroundTint="#FAC740"
+        android:text="@string/choose_powers"
+        android:textAlignment="center"
+        android:textColor="#121921"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bornOption" />
+</android.support.constraint.ConstraintLayout>

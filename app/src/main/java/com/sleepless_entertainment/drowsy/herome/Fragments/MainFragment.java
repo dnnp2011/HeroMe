@@ -1,15 +1,18 @@
 package com.sleepless_entertainment.drowsy.herome.Fragments;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.sleepless_entertainment.drowsy.herome.Activities.MainActivity;
 import com.sleepless_entertainment.drowsy.herome.R;
 
 /**
@@ -22,10 +25,10 @@ import com.sleepless_entertainment.drowsy.herome.R;
  */
 public class MainFragment extends Fragment implements View.OnClickListener {
 
-//    TODO: Try creating the line layout programmatically
-//    TODO: Prevent Button text from moving when checkmark is disabled
-
-    public static int lastSelectedButtonId;
+    private Drawable accidentCheck;
+    private Drawable geneticCheck;
+    private Drawable bornCheck;
+    private View selectedOption;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -88,14 +91,28 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         geneticBtn.setOnClickListener(this);
         bornBtn.setOnClickListener(this);
 
+        chooseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).loadPickPowerFragment();
+            }
+        });
+
 //        Disable the advance button
         chooseBtn.setEnabled(false);
-        chooseBtn.getBackground().setAlpha(128);
+        chooseBtn.getBackground().mutate().setAlpha(128);
 
-        accidentBtn.getCompoundDrawablesRelative()[2].setAlpha(0);
-        geneticBtn.getCompoundDrawablesRelative()[2].setAlpha(0);
-        bornBtn.getCompoundDrawablesRelative()[2].setAlpha(0);
+        accidentCheck = accidentBtn.getCompoundDrawablesRelative()[2];
+        geneticCheck = geneticBtn.getCompoundDrawablesRelative()[2];
+        bornCheck = bornBtn.getCompoundDrawablesRelative()[2];
 
+        accidentCheck.mutate().setAlpha(0);
+        geneticCheck.mutate().setAlpha(0);
+        bornCheck.mutate().setAlpha(0);
+
+        accidentBtn.getBackground().mutate().setAlpha(170);
+        geneticBtn.getBackground().mutate().setAlpha(170);
+        bornBtn.getBackground().mutate().setAlpha(170);
 
         return view;
     }
@@ -124,25 +141,39 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         mListener = null;
     }
 
-    @Override
-    public void onClick(View view) {
-        chooseBtn.setEnabled(true);
-        chooseBtn.getBackground().setAlpha(255);
-
-        Button button = (Button) view;
-
-        if (lastSelectedButtonId == accidentBtn.getId())
-            accidentBtn.getCompoundDrawablesRelative()[2].setAlpha(0);
-        else if (lastSelectedButtonId == geneticBtn.getId())
-            geneticBtn.getCompoundDrawablesRelative()[2].setAlpha(0);
-        else if (lastSelectedButtonId == bornBtn.getId())
-            bornBtn.getCompoundDrawablesRelative()[2].setAlpha(0);
-        else
-            System.out.println("No previous button found");
-
-        button.getCompoundDrawablesRelative()[2].setAlpha(255);
-        lastSelectedButtonId = button.getId();
-    }
+//    @Override
+//    public void onClick(View view) {
+//        chooseBtn.setEnabled(true);
+//        chooseBtn.getBackground().setAlpha(255);
+//
+//        Button button = (Button) view;
+//
+//        switch (view.getId()) {
+//            case R.id.accidentOption:
+//                accidentBtn.getCompoundDrawables()[2].setAlpha(255);
+//                geneticBtn.getCompoundDrawables()[2].setAlpha(0);
+//                bornBtn.getCompoundDrawables()[2].setAlpha(0);
+//                break;
+//            case R.id.mutationOption:
+//                accidentBtn.getCompoundDrawables()[2].setAlpha(0);
+//                geneticBtn.getCompoundDrawables()[2].setAlpha(255);
+//                bornBtn.getCompoundDrawables()[2].setAlpha(0);
+//                break;
+//            case R.id.bornOption:
+//                accidentBtn.getCompoundDrawables()[2].setAlpha(0);
+//                geneticBtn.getCompoundDrawables()[2].setAlpha(0);
+//                bornBtn.getCompoundDrawables()[2].setAlpha(255);
+//                break;
+//            default:
+//                System.out.println("No ID matched in switch statement");
+//                break;
+//        }
+//
+////        if (button.getCompoundDrawables()[2].getAlpha() == 0)
+////            button.getCompoundDrawables()[2].setAlpha(255);
+////        else
+////            button.getCompoundDrawables()[2].setAlpha(0);
+//    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -159,12 +190,44 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         void onMainFragmentInteraction(Uri uri);
     }
 
-    public void onClickOption(View view) {
-        chooseBtn.setClickable(true);
-        //Activate checkmark
-        //Grey out other options
-        //make sure other checkmarks are deactivated
-        Button btn = (Button) view;
-//        btn.setCompoundDrawables(null, null, );
+    @Override
+    public void onClick(View view) {
+            chooseBtn.setEnabled(true);
+            chooseBtn.getBackground().setAlpha(255);
+
+            selectedOption = view;
+
+            switch (view.getId()) {
+                case R.id.accidentOption:
+                    System.out.println("Clicked Accident Option");
+                    accidentCheck.setAlpha(255);
+                    geneticCheck.setAlpha(0);
+                    bornCheck.setAlpha(0);
+                    accidentBtn.getBackground().setAlpha(255);
+                    geneticBtn.getBackground().setAlpha(128);
+                    bornBtn.getBackground().setAlpha(128);
+                    break;
+                case R.id.mutationOption:
+                    System.out.println("Clicked Mutation Option");
+                    geneticCheck.setAlpha(255);
+                    accidentCheck.setAlpha(0);
+                    bornCheck.setAlpha(0);
+                    accidentBtn.getBackground().setAlpha(128);
+                    geneticBtn.getBackground().setAlpha(255);
+                    bornBtn.getBackground().setAlpha(128);
+                    break;
+                case R.id.bornOption:
+                    System.out.println("Clicked Born Option");
+                    bornCheck.setAlpha(255);
+                    accidentCheck.setAlpha(0);
+                    geneticCheck.setAlpha(0);
+                    accidentBtn.getBackground().setAlpha(128);
+                    geneticBtn.getBackground().setAlpha(128);
+                    bornBtn.getBackground().setAlpha(255);
+                    break;
+                default:
+                    System.out.println("No ID matched in switch statement");
+                    break;
+            }
     }
 }
