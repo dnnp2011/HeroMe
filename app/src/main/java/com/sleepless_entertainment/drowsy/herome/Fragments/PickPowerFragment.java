@@ -2,7 +2,7 @@ package com.sleepless_entertainment.drowsy.herome.Fragments;
 
 import android.animation.Animator;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,14 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.sleepless_entertainment.drowsy.herome.Activities.MainActivity;
 import com.sleepless_entertainment.drowsy.herome.R;
 
 public class PickPowerFragment extends Fragment implements View.OnClickListener {
 
+    public MainActivity.HeroPower Power;
 
     private Button turtleBtn, lightningBtn, flightBtn, webBtn, laserBtn, strengthBtn, showBackstoryBtn;
-    private Drawable turtleCheck, lightningCheck, flightCheck, webCheck, laserCheck, strengthCheck;
-
+    private SharedPreferences preferences;
 
     private PickPowerInteractionListener mListener;
 
@@ -39,6 +40,7 @@ public class PickPowerFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pick_power, container, false);
+        preferences = ((MainActivity) getActivity()).sharedPreferences;
 
 //        Fetch button references
         turtleBtn = view.findViewById(R.id.turtleOption);
@@ -60,7 +62,7 @@ public class PickPowerFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onClick(View view) {
 //                Load next fragment
-
+                ((MainActivity) getActivity()).loadNextFragment(BackstoryFragment.newInstance());
             }
         });
 
@@ -68,14 +70,6 @@ public class PickPowerFragment extends Fragment implements View.OnClickListener 
         showBackstoryBtn.setEnabled(false);
         showBackstoryBtn.getBackground().mutate().setAlpha(128);
 
-        turtleCheck = turtleBtn.getCompoundDrawablesRelative()[2];
-        lightningCheck = turtleBtn.getCompoundDrawablesRelative()[2];
-        flightCheck = turtleBtn.getCompoundDrawablesRelative()[2];
-        webCheck = turtleBtn.getCompoundDrawablesRelative()[2];
-        laserCheck = turtleBtn.getCompoundDrawablesRelative()[2];
-        strengthCheck = turtleBtn.getCompoundDrawablesRelative()[2];
-
-//        Set Alpha
         setCheckAlpha(0);
         setButtonAlpha(170);
 
@@ -89,20 +83,44 @@ public class PickPowerFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
+//        Activate advance button and make visible
+        showBackstoryBtn.setEnabled(true);
+        showBackstoryBtn.getBackground().setAlpha(255);
+
 //        Make all checks invisible
         setCheckAlpha(0);
         setButtonAlpha(170);
 
 //        Make selected check visible
         Button button = (Button) view;
-        button.getBackground().setAlpha(255);
-        button.getCompoundDrawables()[2].mutate().setAlpha(255);
+        button.getCompoundDrawablesRelative()[2].mutate().setAlpha(255);
+        view.getBackground().mutate().setAlpha(255);
+        view.setBackgroundResource(R.drawable.hero_button_selected);
 
+        Power = MainActivity.findMatchingPower(button.getText().toString());
+    }
 
-//        Activate advance button and make visible
-        showBackstoryBtn.setEnabled(true);
-        showBackstoryBtn.getBackground().setAlpha(255);
+    @Override
+    public void onResume() {
+        super.onResume();
+        Power = MainActivity.HeroPower.valueOf(preferences.getString("HeroPower", "DEFAULT"));
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("HeroPower", String.valueOf(Power));
+        editor.apply();
+    }
+
+    private void setCheckAlpha(int value) {
+        turtleBtn.getCompoundDrawablesRelative()[2].mutate().setAlpha(value);
+        lightningBtn.getCompoundDrawablesRelative()[2].mutate().setAlpha(value);
+        flightBtn.getCompoundDrawablesRelative()[2].mutate().setAlpha(value);
+        webBtn.getCompoundDrawablesRelative()[2].mutate().setAlpha(value);
+        laserBtn.getCompoundDrawablesRelative()[2].mutate().setAlpha(value);
+        strengthBtn.getCompoundDrawablesRelative()[2].mutate().setAlpha(value);
     }
 
     private void setButtonAlpha(int value) {
@@ -112,15 +130,13 @@ public class PickPowerFragment extends Fragment implements View.OnClickListener 
         webBtn.getBackground().mutate().setAlpha(value);
         laserBtn.getBackground().mutate().setAlpha(value);
         strengthBtn.getBackground().mutate().setAlpha(value);
-    }
 
-    private void setCheckAlpha(int value) {
-        turtleCheck.mutate().setAlpha(value);
-        lightningCheck.mutate().setAlpha(value);
-        flightCheck.mutate().setAlpha(value);
-        webCheck.mutate().setAlpha(value);
-        laserCheck.mutate().setAlpha(value);
-        strengthCheck.mutate().setAlpha(value);
+        turtleBtn.setBackgroundResource(R.drawable.hero_button);
+        lightningBtn.setBackgroundResource(R.drawable.hero_button);
+        flightBtn.setBackgroundResource(R.drawable.hero_button);
+        webBtn.setBackgroundResource(R.drawable.hero_button);
+        laserBtn.setBackgroundResource(R.drawable.hero_button);
+        strengthBtn.setBackgroundResource(R.drawable.hero_button);
     }
 
     @Override
@@ -130,7 +146,7 @@ public class PickPowerFragment extends Fragment implements View.OnClickListener 
             mListener = (PickPowerInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement BackstoryFragmentInteractionListener");
         }
     }
 
