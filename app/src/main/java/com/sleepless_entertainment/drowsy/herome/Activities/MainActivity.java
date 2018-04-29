@@ -19,9 +19,6 @@ import com.sleepless_entertainment.drowsy.herome.R;
 public class MainActivity extends FragmentActivity implements MainFragment.DataListener {
 
 //    TODO: Try creating the line layout around MainFragment programmatically
-//    TODO: Add more Backstories
-//    TODO: Fix Icon sizes
-//    TODO: Reset saved values on "start over"
 
     private SharedPreferences preferences;
     private Bundle dataBundle;
@@ -88,7 +85,8 @@ public class MainActivity extends FragmentActivity implements MainFragment.DataL
     @Override
     protected void onPause() {
         super.onPause();
-        SharedPreferences.Editor editor = preferences.edit();
+
+        SharedPreferences.Editor editor = getPreferences().edit();
         editor.putString(ORIGIN_KEY, getDataBundle().getString(ORIGIN_KEY, null));
         editor.putString(POWER_KEY, getDataBundle().getString(POWER_KEY, null));
         editor.apply();
@@ -107,6 +105,10 @@ public class MainActivity extends FragmentActivity implements MainFragment.DataL
     public void relaunchMainActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        SharedPreferences.Editor editor = getPreferences().edit();
+        editor.clear();
+        editor.apply();
+        dataBundle = new Bundle();
         startActivity(intent);
     }
 

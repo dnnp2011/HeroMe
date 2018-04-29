@@ -5,4 +5,5 @@
         android:centerColor="@color/colorPrimary"
         android:endColor="@color/colorPrimaryDark"
         android:startColor="@color/colorPrimaryDark"/>
+
 </shape>

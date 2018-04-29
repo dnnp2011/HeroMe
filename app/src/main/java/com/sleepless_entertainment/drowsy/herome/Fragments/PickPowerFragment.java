@@ -22,10 +22,6 @@ public class PickPowerFragment extends Fragment implements View.OnClickListener 
         // Required empty public constructor
     }
 
-    public static PickPowerFragment newInstance() {
-        return new PickPowerFragment();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

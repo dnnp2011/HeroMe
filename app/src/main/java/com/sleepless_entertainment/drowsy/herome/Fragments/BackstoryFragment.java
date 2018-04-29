@@ -15,11 +15,10 @@ import com.sleepless_entertainment.drowsy.herome.R;
 
 public class BackstoryFragment extends Fragment {
 
-    private Button primaryPowerBtn, secondaryPowerBtn, startOverBtn;
+    private Button primaryPowerBtn, secondaryPowerBtn;
     private TextView heroNameView, heroBackstoryView;
     private ImageView heroCrestView;
     private String Power, Origin;
-    private Hero hero;
 
     public BackstoryFragment() {
         // Required empty public constructor
@@ -41,9 +40,9 @@ public class BackstoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_backstory, container, false);
 
 //        Fetch References
+        Button startOverBtn = view.findViewById(R.id.nextFragmentBtn);
         primaryPowerBtn = view.findViewById(R.id.primaryPowerView);
         secondaryPowerBtn = view.findViewById(R.id.secondaryPowerView);
-        startOverBtn = view.findViewById(R.id.nextFragmentBtn);
         heroNameView = view.findViewById(R.id.heroNameView);
         heroCrestView = view.findViewById(R.id.heroCrestView);
         heroBackstoryView = view.findViewById(R.id.backstoryView);
@@ -62,12 +61,6 @@ public class BackstoryFragment extends Fragment {
         setHeroInfo(determineHero(Power, Origin));
 
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-//        Set Hero Info Here also
     }
 
     private void unwrapBundle() {
@@ -103,12 +96,18 @@ public class BackstoryFragment extends Fragment {
         heroBackstoryView.setText(hero.Backstory);
         primaryPowerBtn.setText(hero.PrimaryPower);
         checkMark = primaryPowerBtn.getCompoundDrawablesRelative()[2];
-        primaryPowerBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(hero.PrimaryPowerIcon, null, checkMark, null);
+        checkMark.setBounds(0,0,checkMark.getIntrinsicWidth(), checkMark.getIntrinsicHeight());
+        primaryPowerBtn.setCompoundDrawablesRelative(setDrawableBounds(hero.PrimaryPowerIcon), null, checkMark, null);
         primaryPowerBtn.getCompoundDrawablesRelative()[2].mutate().setAlpha(0);
         secondaryPowerBtn.setText(hero.SecondaryPower);
-        secondaryPowerBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(hero.SecondaryPowerIcon, null, checkMark, null);
+        secondaryPowerBtn.setCompoundDrawablesRelative(setDrawableBounds(hero.SecondaryPowerIcon), null, checkMark, null);
         secondaryPowerBtn.getCompoundDrawablesRelative()[2].mutate().setAlpha(0);
         heroCrestView.setImageDrawable(hero.Crest);
+    }
+
+    private Drawable setDrawableBounds(Drawable drawable) {
+        drawable.mutate().setBounds(0,0,(int)(drawable.getIntrinsicWidth()*0.09), (int)(drawable.getIntrinsicHeight()*0.09));
+        return drawable;
     }
 
     private class Hero {
@@ -148,7 +147,7 @@ public class BackstoryFragment extends Fragment {
         return new Hero(
                 "Thor",
                 getString(R.string.thor_story),
-                "Lightning of the gods",
+                "Lightning",
                 "Thor's Hammer",
                 getResources().getDrawable(R.drawable.thors_hammer3x, null),
                 getResources().getDrawable(R.drawable.lightning, null),
@@ -161,7 +160,7 @@ public class BackstoryFragment extends Fragment {
                 "Superman",
                 getString(R.string.superman_story),
                 "Flight",
-                "Superhuman Strength",
+                "Super Strength",
                 getResources().getDrawable(R.drawable.super_man_crest3x, null),
                 getResources().getDrawable(R.drawable.bird, null),
                 getResources().getDrawable(R.drawable.superman_crest, null)
@@ -173,7 +172,7 @@ public class BackstoryFragment extends Fragment {
                 "Spider-Man",
                 getString(R.string.spiderman_story),
                 "Web Slinging",
-                "Strength and Endurance",
+                "Endurance",
                 getResources().getDrawable(R.drawable.spiderweb3x, null),
                 getResources().getDrawable(R.drawable.spider_web, null),
                 getResources().getDrawable(R.drawable.spider, null)
@@ -183,7 +182,7 @@ public class BackstoryFragment extends Fragment {
     private Hero makeCyclops() {
         return new Hero(
                 "Cyclops",
-                getString(R.string.ninja_turtle_story),
+                getString(R.string.cyclops_story),
                 "Laser Vision",
                 "Teamwork",
                 getResources().getDrawable(R.drawable.laservision3x, null),
@@ -195,7 +194,7 @@ public class BackstoryFragment extends Fragment {
     private Hero makeHulk() {
         return new Hero(
                 "The Hulk",
-                getString(R.string.ninja_turtle_story),
+                getString(R.string.hulk_story),
                 "Super Strength",
                 "Invincible",
                 getResources().getDrawable(R.drawable.superstrength3x, null),

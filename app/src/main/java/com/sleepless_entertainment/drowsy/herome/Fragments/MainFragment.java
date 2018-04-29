@@ -22,10 +22,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
-    public static MainFragment newInstance() {
-        return new MainFragment();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,11 +87,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
         ((MainActivity) getActivity()).saveToBundle(MainActivity.ORIGIN_KEY, Origin, this);
@@ -123,6 +114,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     public interface DataListener {
-        public void saveToBundle(String key, String data, @Nullable Fragment fragment);
+        void saveToBundle(String key, String data, @Nullable Fragment fragment);
     }
 }
