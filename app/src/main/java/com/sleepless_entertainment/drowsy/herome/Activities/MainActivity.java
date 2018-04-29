@@ -19,9 +19,9 @@ import com.sleepless_entertainment.drowsy.herome.R;
 public class MainActivity extends FragmentActivity implements MainFragment.DataListener {
 
 //    TODO: Try creating the line layout around MainFragment programmatically
-//    TODO: Implement data persistence for MainFragment buttons
-//     TODO: Make loadNextFragment a generic Fragment Loader
-//    TODO: Implement data hand off between fragments
+//    TODO: Add more Backstories
+//    TODO: Fix Icon sizes
+//    TODO: Reset saved values on "start over"
 
     private SharedPreferences preferences;
     private Bundle dataBundle;
@@ -109,27 +109,6 @@ public class MainActivity extends FragmentActivity implements MainFragment.DataL
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-
-//    public static HeroOrigin findMatchingOrigin(String value) {
-//        HeroOrigin returnVal = HeroOrigin.DEFAULT;
-//        value = value.replace(" ", "_").trim().toUpperCase();
-//        for (HeroOrigin origin : HeroOrigin.values()) {
-//            if (String.valueOf(origin).equals(value))
-//                returnVal = origin;
-//        }
-//        return returnVal;
-//    }
-//
-//    public static HeroPower findMatchingPower(String value) {
-//        HeroPower returnVal = HeroPower.DEFAULT;
-//        value = value.replace(" ", "_").trim().toUpperCase();
-//        for (HeroPower power : HeroPower.values()) {
-//            if (String.valueOf(power).equals(value))
-//                returnVal = power;
-//        }
-//        return returnVal;
-//    }
-
 
 
     public enum HeroOrigin {

@@ -1,6 +1,5 @@
 package com.sleepless_entertainment.drowsy.herome.Fragments;
 
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -140,8 +139,8 @@ public class BackstoryFragment extends Fragment {
                 "Martial Arts",
                 "Regeneration",
                 getResources().getDrawable(R.drawable.turtle_power3x, null),
-                getResources().getDrawable(R.drawable.heroes_and_villains_82, null),
-                getResources().getDrawable(R.drawable.heroes_and_villains_49, null)
+                getResources().getDrawable(R.drawable.nunchuks, null),
+                getResources().getDrawable(R.drawable.turtleshell, null)
 
         );
     }
@@ -152,8 +151,8 @@ public class BackstoryFragment extends Fragment {
                 "Lightning of the gods",
                 "Thor's Hammer",
                 getResources().getDrawable(R.drawable.thors_hammer3x, null),
-                getResources().getDrawable(R.drawable.heroes_and_villains_59, null),
-                getResources().getDrawable(R.drawable.heroes_and_villains_88, null)
+                getResources().getDrawable(R.drawable.lightning, null),
+                getResources().getDrawable(R.drawable.hammer, null)
 
         );
     }
@@ -164,8 +163,8 @@ public class BackstoryFragment extends Fragment {
                 "Flight",
                 "Superhuman Strength",
                 getResources().getDrawable(R.drawable.super_man_crest3x, null),
-                getResources().getDrawable(R.drawable.heroes_and_villains_54, null),
-                getResources().getDrawable(R.drawable.heroes_and_villains_11, null)
+                getResources().getDrawable(R.drawable.bird, null),
+                getResources().getDrawable(R.drawable.superman_crest, null)
 
         );
     }
@@ -176,8 +175,8 @@ public class BackstoryFragment extends Fragment {
                 "Web Slinging",
                 "Strength and Endurance",
                 getResources().getDrawable(R.drawable.spiderweb3x, null),
-                getResources().getDrawable(R.drawable.heroes_and_villains_100, null),
-                getResources().getDrawable(R.drawable.heroes_and_villains_99, null)
+                getResources().getDrawable(R.drawable.spider_web, null),
+                getResources().getDrawable(R.drawable.spider, null)
 
         );
     }
@@ -188,8 +187,8 @@ public class BackstoryFragment extends Fragment {
                 "Laser Vision",
                 "Teamwork",
                 getResources().getDrawable(R.drawable.laservision3x, null),
-                getResources().getDrawable(R.drawable.heroes_and_villains_40, null),
-                getResources().getDrawable(R.drawable.heroes_and_villains_96, null)
+                getResources().getDrawable(R.drawable.laser_visor, null),
+                getResources().getDrawable(R.drawable.xmen, null)
 
         );
     }
@@ -200,8 +199,8 @@ public class BackstoryFragment extends Fragment {
                 "Super Strength",
                 "Invincible",
                 getResources().getDrawable(R.drawable.superstrength3x, null),
-                getResources().getDrawable(R.drawable.heroes_and_villains_10, null),
-                getResources().getDrawable(R.drawable.heroes_and_villains_44, null)
+                getResources().getDrawable(R.drawable.hulk_fist, null),
+                getResources().getDrawable(R.drawable.radioactive, null)
 
         );
     }
