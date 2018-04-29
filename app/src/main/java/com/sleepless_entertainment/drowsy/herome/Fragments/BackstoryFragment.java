@@ -1,14 +1,15 @@
 package com.sleepless_entertainment.drowsy.herome.Fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.Uri;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.app.Fragment;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.sleepless_entertainment.drowsy.herome.Activities.MainActivity;
 import com.sleepless_entertainment.drowsy.herome.R;
@@ -16,9 +17,10 @@ import com.sleepless_entertainment.drowsy.herome.R;
 public class BackstoryFragment extends Fragment {
 
     private Button primaryPowerBtn, secondaryPowerBtn, startOverBtn;
-    private View heroNameView, heroCrestView, heroBackstoryView;
-
-    private BackstoryFragmentInteractionListener mListener;
+    private TextView heroNameView, heroBackstoryView;
+    private ImageView heroCrestView;
+    private String Power, Origin;
+    private Hero hero;
 
     public BackstoryFragment() {
         // Required empty public constructor
@@ -38,12 +40,6 @@ public class BackstoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_backstory, container, false);
-        MainActivity mainActivity = (MainActivity) getActivity();
-        SharedPreferences preferences = mainActivity.sharedPreferences;
-        MainActivity.HeroOrigin origin = MainActivity.HeroOrigin.valueOf(preferences.getString("HeroOrigin", "DEFAULT"));
-        MainActivity.HeroPower power = MainActivity.HeroPower.valueOf(preferences.getString("HeroPower", "DEFAULT"));
-
-        System.out.println("Hero Origin: " + String.valueOf(origin) + " Hero Power: " + String.valueOf(power));
 
 //        Fetch References
         primaryPowerBtn = view.findViewById(R.id.primaryPowerView);
@@ -63,25 +59,10 @@ public class BackstoryFragment extends Fragment {
         });
 
 //        Activate / Deactivate
+        unwrapBundle();
+        setHeroInfo(determineHero(Power, Origin));
 
         return view;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof BackstoryFragmentInteractionListener) {
-            mListener = (BackstoryFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement BackstoryFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     @Override
@@ -90,12 +71,139 @@ public class BackstoryFragment extends Fragment {
 //        Set Hero Info Here also
     }
 
-    public interface BackstoryFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onBackstoryFragmentInteraction(Uri uri);
+    private void unwrapBundle() {
+        Bundle bundle = this.getArguments();
+        Power = bundle.getString(MainActivity.POWER_KEY, null);
+        Origin = bundle.getString(MainActivity.ORIGIN_KEY, null);
     }
 
-    private void setHeroInfo(MainActivity.HeroOrigin origin, MainActivity.HeroPower power) {
-//        Determine Hero Type and fill in info
+    private Hero determineHero(String power, String origin) {
+        if (power.equals(MainActivity.HeroPower.TURTLE_POWER.toString())) {
+            return (makeNinjaTurtle());
+        }
+        else if (power.equals(MainActivity.HeroPower.LIGHTNING.toString())) {
+            return (makeThor());
+        }
+        else if (power.equals(MainActivity.HeroPower.FLIGHT.toString())) {
+            return (makeSuperman());
+        }
+        else if (power.equals(MainActivity.HeroPower.WEB_SLINGING.toString())) {
+            return (makeSpiderman());
+        }
+        else if (power.equals(MainActivity.HeroPower.LASER_VISION.toString())) {
+            return (makeCyclops());
+        }
+        else {
+            return (makeHulk());
+        }
     }
+
+    private void setHeroInfo(Hero hero) {
+        Drawable checkMark = null;
+        heroNameView.setText(hero.Name);
+        heroBackstoryView.setText(hero.Backstory);
+        primaryPowerBtn.setText(hero.PrimaryPower);
+        checkMark = primaryPowerBtn.getCompoundDrawablesRelative()[2];
+        primaryPowerBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(hero.PrimaryPowerIcon, null, checkMark, null);
+        primaryPowerBtn.getCompoundDrawablesRelative()[2].mutate().setAlpha(0);
+        secondaryPowerBtn.setText(hero.SecondaryPower);
+        secondaryPowerBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(hero.SecondaryPowerIcon, null, checkMark, null);
+        secondaryPowerBtn.getCompoundDrawablesRelative()[2].mutate().setAlpha(0);
+        heroCrestView.setImageDrawable(hero.Crest);
+    }
+
+    private class Hero {
+        String Name;
+        String Backstory;
+        String PrimaryPower;
+        String SecondaryPower;
+        Drawable Crest;
+        Drawable PrimaryPowerIcon;
+        Drawable SecondaryPowerIcon;
+
+        public Hero(String name, String backstory, String primaryPower, String secondaryPower,
+                    Drawable crest, Drawable primaryPowerIcon, Drawable secondaryPowerIcon) {
+            this.Name = name;
+            this.Backstory = backstory;
+            this.PrimaryPower = primaryPower;
+            this.SecondaryPower = secondaryPower;
+            this.Crest = crest;
+            this.PrimaryPowerIcon = primaryPowerIcon;
+            this.SecondaryPowerIcon = secondaryPowerIcon;
+        }
+    }
+
+    private Hero makeNinjaTurtle() {
+        return new Hero(
+            "Raphael",
+                getString(R.string.ninja_turtle_story),
+                "Martial Arts",
+                "Regeneration",
+                getResources().getDrawable(R.drawable.turtle_power3x, null),
+                getResources().getDrawable(R.drawable.heroes_and_villains_82, null),
+                getResources().getDrawable(R.drawable.heroes_and_villains_49, null)
+
+        );
+    }
+    private Hero makeThor() {
+        return new Hero(
+                "Thor",
+                getString(R.string.thor_story),
+                "Lightning of the gods",
+                "Thor's Hammer",
+                getResources().getDrawable(R.drawable.thors_hammer3x, null),
+                getResources().getDrawable(R.drawable.heroes_and_villains_59, null),
+                getResources().getDrawable(R.drawable.heroes_and_villains_88, null)
+
+        );
+    }
+    private Hero makeSuperman() {
+        return new Hero(
+                "Superman",
+                getString(R.string.superman_story),
+                "Flight",
+                "Superhuman Strength",
+                getResources().getDrawable(R.drawable.super_man_crest3x, null),
+                getResources().getDrawable(R.drawable.heroes_and_villains_54, null),
+                getResources().getDrawable(R.drawable.heroes_and_villains_11, null)
+
+        );
+    }
+    private Hero makeSpiderman() {
+        return new Hero(
+                "Spider-Man",
+                getString(R.string.spiderman_story),
+                "Web Slinging",
+                "Strength and Endurance",
+                getResources().getDrawable(R.drawable.spiderweb3x, null),
+                getResources().getDrawable(R.drawable.heroes_and_villains_100, null),
+                getResources().getDrawable(R.drawable.heroes_and_villains_99, null)
+
+        );
+    }
+    private Hero makeCyclops() {
+        return new Hero(
+                "Cyclops",
+                getString(R.string.ninja_turtle_story),
+                "Laser Vision",
+                "Teamwork",
+                getResources().getDrawable(R.drawable.laservision3x, null),
+                getResources().getDrawable(R.drawable.heroes_and_villains_40, null),
+                getResources().getDrawable(R.drawable.heroes_and_villains_96, null)
+
+        );
+    }
+    private Hero makeHulk() {
+        return new Hero(
+                "The Hulk",
+                getString(R.string.ninja_turtle_story),
+                "Super Strength",
+                "Invincible",
+                getResources().getDrawable(R.drawable.superstrength3x, null),
+                getResources().getDrawable(R.drawable.heroes_and_villains_10, null),
+                getResources().getDrawable(R.drawable.heroes_and_villains_44, null)
+
+        );
+    }
+
 }

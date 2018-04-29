@@ -1,40 +1,28 @@
 package com.sleepless_entertainment.drowsy.herome.Fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.support.v4.app.*;
 
 import com.sleepless_entertainment.drowsy.herome.Activities.MainActivity;
 import com.sleepless_entertainment.drowsy.herome.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MainFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MainFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MainFragment extends Fragment implements View.OnClickListener {
 
-    public MainActivity.HeroOrigin Origin;
+    private String Origin;
 
     private Button accidentBtn, geneticBtn, bornBtn, chooseBtn;
-    private SharedPreferences preferences;
-
-    private MainFragmentInteractionListener mListener;
 
     public MainFragment() {
         // Required empty public constructor
     }
 
-    public static MainFragment newInstance(String param1, String param2) {
+    public static MainFragment newInstance() {
         return new MainFragment();
     }
 
@@ -47,7 +35,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        preferences = ((MainActivity) getActivity()).sharedPreferences;
+
+//        Check for saved info
+        Bundle bundle = this.getArguments();
+        String tempOrigin = bundle.getString(MainActivity.ORIGIN_KEY, null);
+
 //        Fetch button references
         accidentBtn = view.findViewById(R.id.accidentOption);
         geneticBtn = view.findViewById(R.id.mutationOption);
@@ -73,6 +65,12 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         setCheckAlpha(0);
         setButtonAlpha(170);
 
+        if (tempOrigin != null) {
+//            Find this button, and call onClick on it
+            View savedButton = MainActivity.getMatchingButton(tempOrigin, (ConstraintLayout) view.findViewById(R.id.mainFragmentObj));
+            onClick(savedButton);
+        }
+
         return view;
     }
     @Override
@@ -89,21 +87,18 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         Button button = (Button) view;
         button.getCompoundDrawablesRelative()[2].mutate().setAlpha(255);
 
-        Origin = MainActivity.findMatchingOrigin(button.getText().toString());
+        Origin = button.getText().toString();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Origin = MainActivity.HeroOrigin.valueOf(preferences.getString("HeroOrigin", "DEFAULT"));
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("HeroOrigin", String.valueOf(Origin));
-        editor.apply();
+        ((MainActivity) getActivity()).saveToBundle(MainActivity.ORIGIN_KEY, Origin, this);
     }
 
     private void setCheckAlpha(int value) {
@@ -113,13 +108,13 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setButtonAlpha(int value) {
-        accidentBtn.getBackground().mutate().setAlpha(value);
-        geneticBtn.getBackground().mutate().setAlpha(value);
-        bornBtn.getBackground().mutate().setAlpha(value);
-
         accidentBtn.setBackgroundResource(R.drawable.hero_button);
         geneticBtn.setBackgroundResource(R.drawable.hero_button);
         bornBtn.setBackgroundResource(R.drawable.hero_button);
+
+        accidentBtn.getBackground().mutate().setAlpha(value);
+        geneticBtn.getBackground().mutate().setAlpha(value);
+        bornBtn.getBackground().mutate().setAlpha(value);
     }
 
     private void onClickNextScreen() {
@@ -127,25 +122,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         mainActivity.loadNextFragment(new PickPowerFragment());
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof MainFragmentInteractionListener) {
-            mListener = (MainFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement MainFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface MainFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onMainFragmentInteraction(Uri uri);
+    public interface DataListener {
+        public void saveToBundle(String key, String data, @Nullable Fragment fragment);
     }
 }
